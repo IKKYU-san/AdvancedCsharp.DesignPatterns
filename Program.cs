@@ -12,7 +12,7 @@ namespace AdvancedCsharp.DesignPatterns
         {
             SetupConsoleWindow();
 
-            new Factory1().Run();
+            new FactoryAssignement().Run();
         }
 
 

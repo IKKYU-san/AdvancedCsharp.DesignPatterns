@@ -18,6 +18,19 @@ namespace AdvancedCsharp.DesignPatterns.Factory
         {
         }
 
+        static class Factory{
+            public static Link Create(string url) {
+                if (url.StartsWith("http://"))
+                {
+                    return new ExternalLink { Url = url };
+                }
+                else
+                {
+                    return new InternalLink { Url = url };
+                }
+            }
+        }
+
         public void Run()
         {
 
@@ -25,21 +38,10 @@ namespace AdvancedCsharp.DesignPatterns.Factory
 
             foreach (var url in linkList)
             {
-                Link link;
-
-                if (url.StartsWith("http://"))
-                {
-                    link = new ExternalLink { Url = url };
-                }
-                else
-                {
-                    link = new InternalLink { Url = url };
-                }
-
+                Link link = Factory.Create(url);
                 Console.WriteLine($"Länken är av typen {link.GetType().Name} och har addressen {link.Url}");
             }
         }
-
     }
 
 
