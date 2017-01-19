@@ -101,8 +101,8 @@ namespace AdvancedCsharp.DesignPatterns.Observer
         class IBM : Stock
         {
             // IBM-klassen blir väldigt enkel, den använder mest sin basklass
-            public IBM(string symbol, double price)
-              : base(symbol, price)
+            public IBM(string symbol, double price) 
+                : base(symbol, price)
             {
             }
         }

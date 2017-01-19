@@ -12,7 +12,7 @@ namespace AdvancedCsharp.DesignPatterns
         {
             SetupConsoleWindow();
 
-            new SingletonAssignement().Run();
+            new ObserverAssignement().Run();
         }
 
 

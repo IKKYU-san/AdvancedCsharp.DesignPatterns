@@ -65,6 +65,18 @@ namespace AdvancedCsharp.DesignPatterns.Observer
             static public void DrawPagesWithDialogs(Website website)
             {
                 // Rita ut GUI't utifrån "website"
+                Console.ForegroundColor = website.Color;
+
+                foreach (Page page in website.Pages)
+                {
+                    Console.WriteLine($"{page.Name.PadLeft(12)}");
+                    Console.WriteLine("╭───────────────────╮");
+                    Console.WriteLine("│                   │");
+                    Console.WriteLine("│                   │");
+                    Console.WriteLine("│                   │");
+                    Console.WriteLine("╰───────────────────╯");
+                    Console.WriteLine();
+                }
             }
 
             static public void SetupConsoleWindow()
@@ -87,6 +99,12 @@ namespace AdvancedCsharp.DesignPatterns.Observer
 
             public ConsoleColor Color{ get; set; }
             public List<Page> Pages { get; set; }
+
+            public void Attach(Page page)
+            {
+                // Lägg till investorn i vår lista
+                _investors.Add(investor);
+            }
         }
 
         // Denna klass behöver utökas/modifieras
