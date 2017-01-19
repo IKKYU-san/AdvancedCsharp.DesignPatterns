@@ -13,11 +13,11 @@ namespace AdvancedCsharp.DesignPatterns.Singleton
 
         class NormalClass
         {
-            private int _dice1;
-            private int _dice2;
-            private int _dice3;
+            protected int _dice1;
+            protected int _dice2;
+            protected int _dice3;
 
-            private static Random _random = new Random();
+            protected static Random _random = new Random();
 
             public NormalClass()
             {
@@ -34,7 +34,7 @@ namespace AdvancedCsharp.DesignPatterns.Singleton
                 }
             }
 
-            private int RollDice()
+            protected int RollDice()
             {
                 return _random.Next(6) + 1;
             }
@@ -42,9 +42,35 @@ namespace AdvancedCsharp.DesignPatterns.Singleton
 
         // SINGLETON
 
-        class MySingleton
+        class MySingleton : NormalClass
         {
-           // Implementera denna klass
+            private static MySingleton _instance;
+            private static object syncLock = new object();
+
+            protected MySingleton()
+            {
+                _dice1 = RollDice();
+                _dice2 = RollDice();
+                _dice3 = RollDice();
+            }
+
+            public static MySingleton GetInstance()
+            {
+                // Den yttre if-satsen gör så man inte behöver låsa i onödan
+                if (_instance == null)
+                {
+                    // Låset förhindrar att i en multitrådmiljö att flera instanser skapas
+                    lock (syncLock)
+                    {
+                        if (_instance == null)
+                        {
+                            _instance = new MySingleton();
+                        }
+                    }
+                }
+
+                return _instance;
+            }
         }
 
         private static void TestNormalClass()
@@ -69,14 +95,14 @@ namespace AdvancedCsharp.DesignPatterns.Singleton
 
             // Avkommentera koden nedan. Alla tre tärningskast ska ge samma resultat.
 
-            //var x = MySingleton.GetInstance();
-            //Console.WriteLine($"Diceroll x: {x.DiceRoll}"); 
+            var x = MySingleton.GetInstance();
+            Console.WriteLine($"Diceroll x: {x.DiceRoll}");
 
-            //var y = MySingleton.GetInstance();
-            //Console.WriteLine($"Diceroll y: {y.DiceRoll}");
+            var y = MySingleton.GetInstance();
+            Console.WriteLine($"Diceroll y: {y.DiceRoll}");
 
-            //var z = MySingleton.GetInstance();
-            //Console.WriteLine($"Diceroll z: {z.DiceRoll}");
+            var z = MySingleton.GetInstance();
+            Console.WriteLine($"Diceroll z: {z.DiceRoll}");
 
             Console.WriteLine("");
         }
